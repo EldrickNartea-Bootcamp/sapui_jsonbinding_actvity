@@ -1,6 +1,93 @@
-<mvc:View controllerName="zbtp.sapuijsonbindingactvity.controller.View1"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
+<mvc:View
+  controllerName="zbtp.sapuijsonbindingactvity.controller.View1"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:form="sap.ui.layout.form"
+  displayBlock="true">
+
+  <Panel headerText="Data Binding Basics" class="sapUiResponsiveMargin" width="auto">
+    <form:SimpleForm editable="true">
+      <Label text="EID" />
+      <Input value="{/EID}" />
+
+      <Label text="Enabled" />
+      <CheckBox selected="{/Enabled}" />
+    </form:SimpleForm>
+  </Panel>
+
+  <Panel headerText="Address Details" class="sapUiResponsiveMargin" width="auto">
+    <form:SimpleForm editable="true">
+      <Label text="Address" />
+      <Text text="{= ${/Address/Street} + ' ' + ${/Address/Zip} + ' ' + ${/Address/City} + ' ' + ${/Address/Country} }" class="sapUiSmallMarginBottom" />
+
+      <Label text="Send Email" />
+      <Link text="Send Email" href="{ path: '/EID', formatter: '.formatter.formatMail' }" />
+
+      <Label text="Sales Amount" />
+      <Input
+        value="{
+          parts: [
+            { path: '/SalesAmount' },
+            { path: '/CurrencyCode' }
+          ],
+          type: 'sap.ui.model.type.Currency',
+          formatOptions: { showMeasure: false }
+        }"
+        maxLength="8"
+        class="sapUiSmallMarginBegin" />
+    </form:SimpleForm>
+  </Panel>
+
+
+  <Panel headerText="Aggregation Binding" class="sapUiResponsiveMargin" width="auto">
+    <List items="{ProductsModel>/Product}">
+      <StandardListItem 
+        title="{ProductsModel>ProductName}"
+        number="{
+          parts: [
+            { path: 'ProductsModel>UnitPrice' },
+            { path: 'ProductsModel>/CurrencyCode' }
+          ],
+          type: 'sap.ui.model.type.Currency',
+          formatOptions: { showMeasure: false }
+        }"
+        numberUnit="{ProductsModel>CurrencyCode}"
+        type="Active"
+        press=".onProductSelect" />
+    </List>
+  </Panel>
+  <Panel headerText="Product Details" class="sapUiResponsiveMargin" width="auto">
+    <form:SimpleForm editable="true">
+      <Title text="{i18n>CurrentStockValue}" />
+      <Text
+        text="{
+          parts: [
+            { path: 'ProductsModel>UnitPrice' },
+            { path: 'ProductsModel>UnitsInStock' },
+            { path: 'ProductsModel>/CurrencyCode' }
+          ],
+          formatter: '.formatter.formatStockValue'
+        }" />
+
+      <Label text="Product ID" />
+      <Input value="{ProductsModel>ProductID}" />
+
+      <Label text="Product Name" />
+      <Input value="{ProductsModel>ProductName}" />
+
+      <Label text="Quantity Per Unit" />
+      <Input value="{ProductsModel>QuantityPerUnit}" />
+
+      <Label text="Unit Price" />
+      <Input value="{ProductsModel>UnitPrice}" />
+
+      <Label text="Units In Stock" />
+      <Input value="{ProductsModel>UnitsInStock}" />
+
+      <Label text="Discontinued" />
+      <CheckBox selected="{ProductsModel>Discontinued}" />
+    </form:SimpleForm>
+  </Panel>
+
 </mvc:View>
