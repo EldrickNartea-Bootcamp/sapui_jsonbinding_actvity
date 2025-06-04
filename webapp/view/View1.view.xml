@@ -5,7 +5,7 @@
   xmlns:core="sap.ui.core"
   xmlns:form="sap.ui.layout.form"
   displayBlock="true">
-
+ <Page >
   <Panel headerText="Data Binding Basics" class="sapUiResponsiveMargin" width="auto">
     <form:SimpleForm editable="true">
       <Label text="EID" />
@@ -89,5 +89,5 @@
       <CheckBox selected="{ProductsModel>Discontinued}" />
     </form:SimpleForm>
   </Panel>
-
+</Page>
 </mvc:View>
