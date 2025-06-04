@@ -20,72 +20,73 @@
 
                 <Label id="_IDGenLabel4" text="Sales Amount"/>
                 <Input id="_IDGenInput1" value="{
-                              parts: [
-                                { path: 'myDetails>/SalesAmount' },
-                                { path: 'myDetails>/CurrencyCode' }
-                              ],
-                              type: 'sap.ui.model.type.Currency',
-                              formatOptions: { showMeasure: false }
-                            }" maxLength="8" class="sapUiSmallMarginBegin"/>
+                                                  parts: [
+                                                    { path: 'myDetails>/SalesAmount' },
+                                                    { path: 'myDetails>/CurrencyCode' }
+                                                  ],
+                                                  type: 'sap.ui.model.type.Currency',
+                                                  formatOptions: { showMeasure: false }
+                                                }" maxLength="8" class="sapUiSmallMarginBegin"/>
             </form:SimpleForm>
         </Panel>
 
 
-    <Panel id="_IDGenPanel2" headerText="Aggregation Binding" class="sapUiResponsiveMargin" width="auto">
-            <List id="_IDGenList" items="{ProductsModel>/ProductCollection}">
-                <ObjectListItem id="_IDGenObjectListItem"
-                        title="{ProductsModel>Name}"
-                        type="Active"
-                        press="onListItemPress"
-                        number="{
-                            parts:[{path:'ProductsModel>Price'},{path:'myDetails>/CurrencyCode'}],
-                            type: 'sap.ui.model.type.Currency',
-                            formatOptions: {showMeasure: false}
-                        }"
-                        numberUnit="{myDetails>/CurrencyCode}">
-                        <ObjectAttribute id="_IDGenObjectAttribute" text="Stock on Hand {ProductsModel>Quantity}" />
-
-                        <ObjectAttribute id="_IDGenObjectAttribute1"
-                            text="{
-                                parts:[
-                                    {path:'ProductsModel>Price'},
-                                    {path:'ProductsModel>Depth'},
-                                    {path:'myDetails>/CurrencyCode'}
-                                ]
-                            }" />                            
+        <Panel id="_IDGenPanel2" headerText="Aggregation Binding" class="sapUiResponsiveMargin" width="auto">
+            <List id="_IDGenList1" headerText="{i18n>productListTitle}" items="{products>/Products}">
+                <items>
+                    <ObjectListItem id="_IDGenObjectListItem" title="{products>ProductName}" number="{
+                        						parts: [
+                        							{path: 'products>UnitPrice'},
+                        							{path: '/currencyCode'}
+                        						],
+                        						type: 'Currency',
+                        						formatOptions: { showMeasure: false }
+                        					}" numberUnit="{/currencyCode}">
+                        <attributes>
+                            <ObjectAttribute id="_IDGenObjectAttribute" text="{products>QuantityPerUnit}"/>
+                            <ObjectAttribute id="_IDGenObjectAttribute1" title="{i18n>stockValue}" text="{
+                            								parts: [
+                            									{path: 'products>UnitPrice'},
+                            									{path: 'products>UnitsInStock'},
+                            									{path: '/currencyCode'}
+                            								],
+                            								formatter: '.formatStockValue'
+                            							}"/>
+                        </attributes>
                     </ObjectListItem>
+                </items>
             </List>
         </Panel>
         <Panel id="_IDGenPanel3" headerText="Product Details" class="sapUiResponsiveMargin" width="auto">
             <form:SimpleForm id="_IDGenSimpleForm2" editable="true">
                 <Title id="_IDGenTitle1" text="{i18n>CurrentStockValue}"/>
                 <Text id="_IDGenText1" text="{
-                              parts: [
-                                { path: 'ProductsModel>UnitPrice' },
-                                { path: 'ProductsModel>UnitsInStock' },
-                                { path: 'ProductsModel>/CurrencyCode' }
-                              ],
-                              formatter: '.formatter.formatStockValue'
-                            }"/>
+                                                  parts: [
+                                                    { path: 'products>UnitPrice' },
+                                                    { path: 'products>UnitsInStock' },
+                                                    { path: 'products>/CurrencyCode' }
+                                                  ],
+                                                  formatter: '.formatter.formatStockValue'
+                                                }"/>
 
                 <Label id="_IDGenLabel5" text="Product ID"/>
-                <Input id="_IDGenInput2" value="{ProductsModel>ProductID}"/>
+                <Input id="_IDGenInput2" value="{products>ProductID}"/>
 
                 <Label id="_IDGenLabel6" text="Product Name"/>
-                <Input id="_IDGenInput3" value="{ProductsModel>ProductName}"/>
+                <Input id="_IDGenInput3" value="{products>ProductName}"/>
 
                 <Label id="_IDGenLabel7" text="Quantity Per Unit"/>
-                <Input id="_IDGenInput4" value="{ProductsModel>QuantityPerUnit}"/>
+                <Input id="_IDGenInput4" value="{products>QuantityPerUnit}"/>
 
                 <Label id="_IDGenLabel8" text="Unit Price"/>
-                <Input id="_IDGenInput5" value="{ProductsModel>UnitPrice}"/>
+                <Input id="_IDGenInput5" value="{products>UnitPrice}"/>
 
                 <Label id="_IDGenLabel9" text="Units In Stock"/>
-                <Input id="_IDGenInput6" value="{ProductsModel>UnitsInStock}"/>
+                <Input id="_IDGenInput6" value="{products>UnitsInStock}"/>
 
                 <Label id="_IDGenLabel10" text="Discontinued"/>
-                <CheckBox id="_IDGenCheckBox1" selected="{ProductsModel>Discontinued}"/>
+                <CheckBox id="_IDGenCheckBox1" selected="{products>Discontinued}"/>
             </form:SimpleForm>
-        </Panel> 
+        </Panel>
     </Page>
 </mvc:View>

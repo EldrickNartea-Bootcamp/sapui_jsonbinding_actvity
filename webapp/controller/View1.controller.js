@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], (Controller, JSONModel) => {
+    "sap/ui/model/json/JSONModel",
+	"sap/ui/model/type/Currency"
+], (Controller, JSONModel, Currency) => {
     "use strict";
 
     return Controller.extend("zbtp.sapuijsonbindingactvity.controller.View1", {
@@ -32,9 +33,15 @@ sap.ui.define([
             var subject = encodeURIComponent(mailSubject);
             var body = encodeURIComponent(mailBody);
             var mailtoLink = `mailto:${to + "@accenture.com"}?subject=${subject}&body=${body}`;
-            
+
             window.location.href = mailtoLink;
-        }
+        },
+
+		formatStockValue(fUnitPrice, iStockLevel, sCurrCode) {
+			const oCurrency = new Currency();
+
+			return oCurrency.formatValue([fUnitPrice * iStockLevel, sCurrCode], "string");
+		}
 
         
     });
