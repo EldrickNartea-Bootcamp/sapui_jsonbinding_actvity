@@ -51,6 +51,10 @@
         "settings": {
           "bundleName": "zbtp.sapuijsonbindingactvity.i18n.i18n"
         }
+      }, 
+      "ProductsModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "./model/Products.json"
       }
     },
     "resources": {
